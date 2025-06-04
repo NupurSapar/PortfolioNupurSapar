@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nupur's Library</title>
+  <!-- Google Fonts: Alexandria (regular) + Great Vibes -->
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400&family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      font-family: 'Alexandria', sans-serif;
+      font-weight: 400;
+      background-color: #fdfde1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    /* Small tilted poster behind intro text */
+    .poster-left {
+      position: absolute;
+      top: 70px;
+      left: 50px;
+      width: 60px;
+      height: 50px;
+      background-color: #d7ddeb;
+      transform: rotate(-6deg);
+      z-index: 0;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Large rectangle behind shelf */
+    .poster-right {
+  position: absolute;
+  top: 80px;
+  right: 240px;
+  width: 300px;
+  height: 180px;
+  font-family: 'great vibes';
+  font-weight: 600;
+  font-size:50px;
+  color:#8ec2c2;
+  background-color: #dceeff;
+  z-index: 0;
+  border-radius: 5px;
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+}
+
+    .intro {
+        margin-top: -20px;
+      margin-left: 40px;
+      flex: 1;
+      padding-left: 5vw;
+      z-index: 1;
+    }
+
+    .intro h1 {
+      font-size: 6rem;
+      margin: 0;
+      color: #2C3333;
+      font-weight: 400;
+      line-height: 1.4;
+    }
+
+    .intro .cursive {
+      font-family: 'Great Vibes', cursive;
+      font-size: 6rem;
+      margin: -5px 0 -10px 0;
+      color: #2C3333;
+      line-height: 1.4;
+    }
+
+    .shelf {
+      position: relative;
+      width: 250px;
+      margin-top: 200px;
+      height: 500px;
+      background-color: #69564B;
+      display: flex;
+      right:0;
+      left:auto;
+      flex-direction: column;
+      justify-content: space-evenly;
+      padding: 20px;
+      box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    /* Top edge of the shelf */
+    .shelf::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: -10px; /* extend beyond left */
+  width: calc(100% + 20px); /* extend width to cover left extension */
+  height: 20px;
+  background-color: #53473F;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+    .shelf .rack {
+      background-color: #fff8eb;
+      color:#2C3333;
+      font-family: 'Alexandria', sans-serif;
+      font-size:16px;
+      height: 60px;
+      border-radius: 8px;
+      margin: 10px 0;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+.rack:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+
+    .decor {
+      position: absolute;
+      top: 50%;
+      right: 45%;
+      width: 100px;
+      height: 100px;
+      background-color: #fef76c;
+      border-radius: 100px;
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      opacity: 0.4;
+      z-index: 0;
+    }
+    .lamp-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+}
+
+/* Chain string */
+.lamp-chain {
+  width: 4px;
+  height: 60px;
+  background-color: #444;
+}
+
+/* Dome-shaped lamp */
+.lamp-shade {
+  width: 100px;
+  height: 40px;
+  background-color: #444;
+  border-top-left-radius: 80px;
+  border-top-right-radius: 80px;
+  border-bottom: none;
+}
+
+/* Soft glow under the lamp */
+.lamp-light {
+  width: 120px;
+  height: 60px;
+  margin-top: -10px;
+  background: radial-gradient(ellipse at center, rgba(255, 253, 200, 0.5) 0%, rgba(255, 253, 200, 0) 80%);
+  border-radius: 50%;
+  z-index: -1;
+}
+/* Horizontal bookshelf under the heading */
+/* Horizontal bookshelf under the heading, partially offscreen */
+.book-shelf::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -10px; /* extend beyond left */
+  width: calc(100% + 20px); /* extend width to cover left extension */
+  height: 20px;
+  background-color: #53473F;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.book-shelf {
+  position: absolute;
+  top: 90vh; /* Start just below the full screen */
+  left:0;
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  padding: 10px 20px;
+  background-color: #69564B;
+  height: 160px;
+  width: 660px;
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  transform: translateY(-50px); /* Move it up by 50px so it's half visible */
+}
+
+/* Books on the shelf */
+.book-shelf .book {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  text-align: center;
+  color:#2C3333;
+  width: 38px;
+  height: 140px;
+  margin-right: 4px;
+  background: linear-gradient(145deg, #b79891, #a27866);
+  border-radius: 3px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+
+  /* Flexbox centering */
+  display: flex;
+  justify-content: center;  /* horizontal alignment */
+  align-items: center;      /* vertical alignment */
+}
+
+
+/* Hover effect */
+.book-shelf .book:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Tilted last book */
+.book-shelf .book.tilted {
+  transform: rotate(-10deg);
+  left:600px;
+}
+.book-shelf .book.tilted-right {
+  transform: rotate(10deg);
+  left:600px;
+}
+.book-shelf-right {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  top: 140vh;
+   right: 0; /* ✅ Stick it to the right edge */
+  left: auto; /* ✅ Cancel left if it was set */
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  padding: 10px 20px;
+  background-color: #69564B;
+  height: 160px;
+  width: 660px;
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  transform: translateY(-50px);
+}
+.book-shelf-left2 {
+  top: 190vh;
+  left: 0;
+}
+
+.book-shelf-right2 {
+  display: flex;
+  justify-content: flex-end;
+  top: 240vh;
+ right: 0; /* ✅ Stick it to the right edge */
+  left: auto; /* ✅ Cancel left if it was set */
+}
+
+#shelf1 .book:nth-child(1) {
+  background: linear-gradient(145deg, #ffc2f6, #bf9dff)
+}
+#shelf1 .book:nth-child(2) {
+  background: linear-gradient(145deg, #7cffe7, #baff79);
+}
+#shelf1 .book:nth-child(3) {
+  background: linear-gradient(145deg, #9ce0ff, #2e8bfc);
+}
+#shelf1 .book:nth-child(4) {
+  background: linear-gradient(145deg, #f8de61, #a4fc52);
+}
+#shelf1 .book:nth-child(5) {
+  background: linear-gradient(145deg, #ffd1bf, #f96746);
+}
+
+#shelf1 .book:nth-child(6) {
+  background: linear-gradient(145deg, #fbeb6c, #fba00d);
+}
+
+#shelf2 .book:nth-child(2) {
+  background: linear-gradient(145deg, #a1ccff, #febedb);
+}
+#shelf2 .book:nth-child(3) {
+  background: linear-gradient(145deg, #e0fff9, #7df1e1);
+}
+#shelf2 .book:nth-child(4) {
+  background: linear-gradient(145deg, #8797ff, #a483ff);
+}
+#shelf2 .book:nth-child(5) {
+  background: linear-gradient(145deg, #f8de61, #a4fc52);
+}
+#shelf2 .book:nth-child(6) {
+  background: linear-gradient(145deg, #ffd39d, #ffab51);
+}
+#shelf2 .book:nth-child(7) {
+  background: linear-gradient(145deg, #7cffe7, #baff79)
+}
+#shelf2 .book:nth-child(8) {
+  background: linear-gradient(145deg, #ffc2f6, #bf9dff)
+}
+
+#shelf3 .book:nth-child(1) {
+  background: linear-gradient(145deg, #fffd94, #79b5ff)
+}
+#shelf3 .book:nth-child(2) {
+  background: linear-gradient(145deg, #9ce0ff, #2e8bfc)
+}
+
+#shelf4 .book:nth-child(3) {
+  background: linear-gradient(145deg, #fff3bf, #f4ed68)
+}
+#shelf4 .book:nth-child(4) {
+  background: linear-gradient(145deg, #d49dff, #ffa8e2)
+}
+
+
+
+
+.footer {
+  position: absolute;
+  top: 280vh;
+  left: 0;
+  width: 99vw;
+  background-color: #69564B;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+
+  /* Rug vibe */
+  border-top: 10px solid #503E35;
+  border-bottom: 30px solid #503E35;
+  border-radius: 50px 50px 50px 50px;
+  background-image: linear-gradient(135deg, #69564B 25%, #5a473d 25%, #5a473d 50%, #69564B 50%, #69564B 75%, #5a473d 75%);
+  background-size: 40px 40px;
+}
+
+.footer-content {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  color: #f5f5f5;
+  font-family: 'Alexandria', sans-serif;
+}
+
+.footer-section {
+  flex: 1 1 250px;
+  margin: 10px 20px;
+}
+
+.footer-section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #fff2d9;
+  border-bottom: 2px solid #fff2d9;
+  padding-bottom: 5px;
+}
+
+.footer-section p,
+.footer-section a,
+.footer-section li {
+  font-size: 0.95rem;
+  color: #f5f5f5;
+  line-height: 1.6;
+  text-decoration: none;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 8px;
+}
+
+.footer-section a:hover {
+  text-decoration: underline;
+  color: #ffdfb9;
+}
+
+.shelf-label {
+  font-weight: bold;
+  background: #ffe8a3;
+  color:#2C3333;
+  font-weight: 300;
+  padding: 6px;
+  border-radius: 2px;
+}
+#shelf-label1{
+   margin-left: 230px;
+}
+#shelf-label2{
+   padding-right: 26px;
+   margin-right: 220px;
+}
+#shelf-label3{
+   margin-left: 400px;
+}
+#shelf-label4{
+   margin-right: 400px;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(6px);
+    overflow-y: auto;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #fff 0%, #f8f8f8 100%);
+    margin: 5% auto;
+    padding: 2rem;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 700px;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    animation: modalOpen 0.4s ease forwards;
+}
+
+@keyframes modalOpen {
+    from {
+        opacity: 0;
+        transform: scale(0.85) rotateY(-10deg);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) rotateY(0deg);
+    }
+}
+
+.close {
+    position: absolute;
+    top: 15px; right: 20px;
+    font-size: 28px;
+    font-weight: 700;
+    color: #666;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close:hover {
+    color: #333;
+}
+
+.project-title {
+    font-size: 2rem;
+    color: #2d2d2d;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #4a90e2;
+    padding-bottom: 0.5rem;
+}
+
+.project-meta {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.8rem;
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    background: rgba(74, 144, 226, 0.15);
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: #4a90e2;
+    font-weight: 600;
+}
+
+.project-description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: #444;
+}
+
+.project-tech h3 {
+    font-weight: 700;
+    color: #3a3a3a;
+}
+
+.tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+}
+
+.tech-tag {
+    background: linear-gradient(135deg, #4a90e2, #50e3c2);
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    user-select: none;
+}
+
+.project-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.project-link {
+    background: linear-gradient(135deg, #4a90e2, #357abd);
+    color: white;
+    padding: 0.7rem 1.4rem;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+    transition: all 0.3s ease;
+    user-select: none;
+    margin-top: 1rem; /* 👈 This adds space above */
+}
+
+
+.project-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        margin: 10% auto;
+        padding: 1.5rem;
+    }
+
+    .project-title {
+        font-size: 1.7rem;
+    }
+
+    .project-meta {
+        gap: 1rem;
+    }
+}
+
+.book-preview {
+  position: absolute;
+  background: #ffffff;
+  color: #333;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  display: none;
+  max-width: 250px;
+  pointer-events: none;
+}
+
+.book-preview.visible {
+  display: block;
+}
+
+.book-preview h4 {
+  margin: 0 0 0.4rem 0;
+  font-size: 1rem;
+  color: #2d2d2d;
+}
+
+.book-preview p {
+  font-size: 0.88rem;
+  margin: 0;
+}
+
+.preview-note {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  color: #4a90e2;
+  font-weight: 600;
+}
+
+#projectModal .modal-content {
+  padding: 2rem;
+  background: #fffefc;
+  border: 10px solid #d3c6b3;
+  border-radius: 8px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.page-flip-container {
+  position: relative;
+  perspective: 1000px;
+  margin-top: 1rem;
+}
+
+.flip-page {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 5px;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+
+.page-buttons button {
+  margin: 0.5rem 0.5rem 0 0;
+  padding: 0.5rem 1rem;
+  background-color: #5d4b3b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.project-media {
+  margin: 1rem 0;
+  width: 100%;
+  max-height: 300px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f9f9f9;
+}
+
+.project-media img,
+.project-media video {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.project-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.media-container {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  text-align: center;
+}
+
+.media-container img,
+.media-container video {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.carousel-btn {
+  background: #4a90e2;
+  color: white;
+  border: none;
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.poster-image {
+  width: 60px;        
+  height: auto;        
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+  opacity: 60%;
+}
+
+.poster-image:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.poster-right:hover {
+  transform: scale(1.03);
+  cursor: pointer;
+}
+
+
+  </style>
+</head>
+<body>
+    
+  <!-- Background posters -->
+  <div class="poster-left">
+  <a href="https://www.linkedin.com/in/nupur-sapar-264941301/" target="_blank">
+    <img src="media/Linkedin.png" alt="LinkedIn Poster" class="poster-image" />
+  </a>
+</div>
+  <div class="poster-right">
+  <a href="https://drive.google.com/drive/folders/1VF77B1awjAlpGCY9DyOx84tWv5_3PsnX?usp=sharing" target="_blank" style="color: #8ec2c2">
+    Resume
+  </a>
+</div>
+
+
+  <!-- Main intro text -->
+  <div class="intro">
+    <h1>Welcome to</h1>
+    <p class="cursive">Nupur’s</p>
+    <h1>Library</h1>
+  </div>
+
+  <!-- Shelf with racks -->
+<div class="shelf">
+  <button class="rack" data-target="footer">About me</button>
+  <button class="rack" data-target="shelf1">Development</button>
+  <button class="rack" data-target="shelf2">UI/UX</button>
+  <button class="rack" data-target="shelf3">Data Analysis</button>
+  <button class="rack" data-target="shelf4">Graphic Design</button>
+</div>
+
+
+  <!-- Optional star shape -->
+<div class="decor"></div>
+
+  <!-- Hanging Dome Lamp -->
+<div class="lamp-container">
+  <div class="lamp-chain"></div>
+  <div class="lamp-shade"></div>
+  <div class="lamp-light"></div>
+</div>
+
+<!-- Horizontal shelf with books -->
+<div id="shelf1" class="book-shelf">
+  <div class="book">AI Health Companion</div>
+  <div class="book">Teacher Feedback</div>
+  <div class="book">BluePulse</div>
+  <div class="book">FoodCircle</div>
+  <div class="book">Disaster Management</div>
+  <div class="book tilted">Thekedar</div>
+  <div class="shelf-label" id="shelf-label1">Development</div>
+</div>
+
+<!-- Hover Preview Box -->
+<div id="bookPreview" class="book-preview">
+  <h4 id="previewTitle">Project Title</h4>
+  <p id="previewShort">Short description...</p>
+  <span class="preview-note">Click to know more →</span>
+</div>
+
+<div id="shelf2" class="book-shelf book-shelf-right">
+  <div class="shelf-label" id="shelf-label2">UI UX</div>
+  <div class="book tilted-right">Pune Metro Internship</div>
+  <div class="book">Closet</div>
+  <div class="book">CSI UI/UX Competion</div>
+  <div class="book">FoodCircle UI</div>
+  <div class="book">kGamify UI/UX Internship</div>
+  <div class="book">Teacher Feedback</div>
+  <div class="book">AI Health Companion UI</div>
+</div>
+<!-- Second shelf on the left -->
+<div id="shelf3" class="book-shelf book-shelf-left2">
+  <div class="book">Ecommerce Dashboard</div>
+  <div class="book">BluePulse</div>
+  <div class="book tilted"></div>
+  <div class="shelf-label" id="shelf-label3">Data Analysis</div>
+</div>
+<!-- Second shelf on the right -->
+<div id="shelf4" class="book-shelf book-shelf-right2">
+  <div class="shelf-label" id="shelf-label4">Graphic Design/ Social Work</div>
+  <div class="book tilted-right"></div>
+  <div class="book">Jivhala Design Internship</div>
+  <div class="book">English Training</div>
+</div>
+<footer id="footer" class="footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <h3>About Me</h3>
+      <p>I’m Nupur Sapar, a passionate tech enthusiast, web developer, designer, and explorer of creative ideas. Always learning, always growing.</p>
+    </div>
+
+    <div class="footer-section">
+      <h3>Connect</h3>
+      <ul>
+        <li><a href="https://github.com/NupurSapar" target="_blank">GitHub</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h3>Contact</h3>
+      <p>Email: nupursapar4444@gmail.com.com</p>
+      <p>LinkedIn: <a href="https://www.linkedin.com/in/nupur-sapar-264941301/" target="_blank">https://www.linkedin.com/in/nupur-sapar</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- Insert your modal HTML structure here -->
+<div id="projectModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2 class="project-title" id="modalTitle">Project Title</h2>
+    <div class="project-meta" id="modalMeta"></div>
+    <div class="project-description" id="modalDescription"></div>
+    <div class="project-carousel">
+  <button class="carousel-btn" id="prevMedia">⟨</button>
+  <div id="mediaContainer" class="media-container"></div>
+  <button class="carousel-btn" id="nextMedia">⟩</button>
+</div>
+
+   <div id="modalMedia" style="margin-top: 1rem;"></div>
+    <div class="project-tech">
+      <h3>Technologies Used:</h3>
+      <div class="tech-list" id="modalTech"></div>
+    </div>
+    <div class="project-links" id="modalLinks"></div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.rack').forEach(button => {
+    button.addEventListener('click', () => {
+      const targetId = button.getAttribute('data-target');
+      const targetShelf = document.getElementById(targetId);
+      if (targetShelf) {
+        targetShelf.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  });
+
+const preview = document.getElementById('bookPreview');
+const previewTitle = document.getElementById('previewTitle');
+const previewShort = document.getElementById('previewShort');
+
+const books = document.querySelectorAll('.book');
+
+const projectPreviews = {
+  'Thekedar': 'Connect daily-wage workers to employers.',
+  'Teacher Feedback': 'Efficient Feedback Collection and ML Analysis for Teachers',
+  'BluePulse': 'Ganga River water quality tracking and live predictions',
+  'AI Health Companion': 'Personal AI companion and health suggestions.',
+  'FoodCircle': 'Ingredient based quick Indian recipe sharing and discovery platform.',
+  'Disaster Management': 'Natural crisis response made easy.',
+
+   'Pune Metro Internship': 'Pune metro AR station navigation app interface design.',
+   'Closet': 'An AI Powered personalised style suggestions platform',
+   'CSI UI/UX Competion': 'An AI Powered personalised style suggestions platform',
+   'kGamify UI/UX Internship': 'Enhancing UI/UX for kGamify, a gamified learning platform through research, wireframes, and design collaboration.',
+   'AI Health Companion UI': 'Personal AI companion and health suggestions.',
+   'FoodCircle UI': 'Ingredient based quick Indian recipe sharing and discovery platform.',
+   'Ecommerce Dashboard': 'Power BI Dashboard to visualize revenue, profit, and sales trends for data-driven decisions.',
+   'Jivhala Design Internship': 'Designed social media content for a grassroots NGO to amplify outreach and engagement.',
+   'English Training': 'Taught spoken and written English to school teachers from non-English backgrounds.',
+
+};
+
+//mouse events
+books.forEach(book => {
+  book.addEventListener('mouseenter', (e) => {
+    const title = book.textContent.trim();
+    const short = projectPreviews[title] || 'Click to see more details.';
+    previewTitle.textContent = title;
+    previewShort.textContent = short;
+    preview.classList.add('visible');
+  });
+
+  book.addEventListener('mousemove', (e) => {
+    const parentShelf = book.closest('.book-shelf');
+    const shelfId = parentShelf ? parentShelf.id : '';
+
+    const offsetX = (shelfId === 'shelf2' || shelfId === 'shelf4') ? -265 : 15;
+    preview.style.left = `${e.pageX + offsetX}px`;
+    preview.style.top = `${e.pageY - 20}px`;
+  });
+
+  book.addEventListener('mouseleave', () => {
+    preview.classList.remove('visible');
+  });
+});
+
+
+  const projects = {
+'AI Health Companion': {
+    category: 'Artificial Intelligence · HealthTech · Web Application',
+    duration: '4 weeks',
+    status: 'Completed',
+    description: 'AI Health Companion is an intelligent wellness assistant that helps users monitor and improve their physical and mental health through personalized insights. It allows users to log symptoms, receive possible condition suggestions, get reminders for medication and hydration, and track habits like sleep, exercise, and stress levels. Built with natural language processing and basic machine learning models, the system simulates a conversational experience that adapts to user needs. Designed with accessibility and empathy in mind, this project showcases the practical use of AI to make healthcare guidance more approachable and continuous.',
+    tech: ['React', 'Node.js', 'AI API', 'MySQL'],
+    links: [
+      { text: 'GitHub Repo', url: 'https://github.com/NupurSapar/AI-Health-Companion' },
+      { text: 'Figma Prototype', url: 'https://www.figma.com/design/tASuT4rQtrUmOcbxWPruG0/AI-Health-Companion-by-Nupur?node-id=0-1&t=FkXzNCV6Yrp9oy9A-1' }
+    ],
+    media: [
+      { type: 'image', src: 'media/AI Health/AIHealth_Dashboard2.jpg' },
+      { type: 'embed', src: 'https://drive.google.com/file/d/1MNzKU1P4KTgM4DF8x4HFBXyzADvFnfx2/preview' },
+      { type: 'image', src: 'media/AI Health/AIHealth_Certificate.jpg' }
+    ]
+  },
+  'Teacher Feedback': {
+    category: 'Education · Analytics · ML',
+    duration: '5 weeks',
+    status: 'Completed',
+    description: `This centralized feedback and analytics platform simplifies teacher evaluation through structured student feedback, customizable and mandatory feedback forms, and ML-powered sentiment analysis using models like VADER. Teachers are empowered through visual dashboards that display ratings, performance graphs, and word clouds, providing actionable insights while preserving student anonymity. The platform ensures secure, role-based institutional login and fosters engagement through features like leaderboards and a teacher community module.`,
+    tech: ["React (Frontend)",
+    "Node.js (Backend)",
+    "MySQL (Database)",
+    "VADER Sentiment Analysis",
+    "Custom ML Models",
+    ],
+    links: [
+      { text: 'GitHub Repo', url: 'https://github.com/NupurSapar/TeacherFeedback'},
+      { text: 'Figma Prototype', url: 'https://www.figma.com/design/BCROI73ty6r4X0bdtRP2t6/Teacher-Feedback-Analysis-System-by-Nupur?node-id=0-1&t=EM6jKIhP1pHlVv5Z-1' },
+    ],
+    media: [
+      {type: 'image', src: 'media/TeacherFeedback/TeacherFeedback_Page2.jpg' },
+      { type: 'image', src: 'media/TeacherFeedback/TeacherFeedback_Certificate.jpg' },
+      { type: 'video', src: '#' },
+    ]
+  },
+  'BluePulse': {
+    category: 'Survey System · Sustainability · AI/ML · IoT',
+    duration: '2 weeks',
+    status: 'Completed',
+    description: 'BluePulse is an AI-powered platform for real-time river pollution tracking and forecasting. It combines IoT sensors, satellite data, and machine learning (ARIMA & LSTM) to provide dynamic GIS dashboards, threshold-based SMS/email alerts, and AI-generated monthly reports. Designed for both government officials and citizens, it delivers actionable insights for sustainable water management and early contamination detection.',
+    tech: ["Python (Pandas, Matplotlib)",
+    "Streamlit",
+    "React",
+    "Google Earth Engine API",
+    "ARIMA & LSTM models",
+    "Twilio",
+    "Web Sockets",
+    "GitHub for version control"],
+    links: [
+      { text: 'GitHub Repo', url: 'https://github.com/NupurSapar/BluePulse' },
+      { text: 'Figma Prototype', url: 'https://www.figma.com/design/P4LBcnK6sTpsBA2OEKJV9r/BluePulse-by-Nupur?node-id=0-1&t=uB8njkbFNvgdkZUA-1' }
+    ],
+    media: [
+      { type: 'embed', src: 'https://drive.google.com/file/d/1rbBBIQ_9ieM-zmex5ohG48FMT6AZpePh/preview' },
+      {type: 'image', src: 'media/BluePulse/BluePulse_PWBI.jpg' },
+      {type: 'image', src: 'media/BluePulse/BluePulse_Page.jpg' },
+      {type: 'image', src: 'media/BluePulse/BluePulse_Certificate.jpg' }
+    ]
+  },
+  'FoodCircle': {
+    category: 'Web App · React · UX/UI',
+    duration: '8 weeks',
+    status: 'Ongoing',
+    description: `FoodCircle is a convenient web platform that lets users discover recipes based on the ingredients they already have. Designed to solve the classic 'What's in my pantry?' dilemma, the app allows users to search by ingredient, get tailored recipe results, and even post and share their own creations. With a clean and responsive React-based UI, FoodCircle focuses on usability and collaboration, offering a social experience around everyday cooking.`,
+    tech: ['React', 'Node.js', 'Express', 'MySQL', "Axios / Fetch for API integration",
+    "CSS / Styled Components or MUI for styling"],
+    links: [
+      { text: 'GitHub Repo', url: 'https://github.com/NupurSapar/FoodCircle' },
+      { text: 'Figma Prototype', url: 'https://www.figma.com/proto/NRHfrBjHA3etXMwDvpDwDZ/FoodCircle-by-Nupur?node-id=0-395&p=f&t=jcDUqZOfuOWzNhBZ-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=0%3A395' }
+    ],
+    media: [
+      { type: 'embed', src: 'https://drive.google.com/file/d/19ZXTMGi46WTepvQNKh8-D1NDrxZXD6jE/preview' },
+      {type: 'image', src: 'media/FoodCircle/Landing Page.png' }
+  ]
+  },
+  'Disaster Management': {
+    category: 'Survey System · Alert System',
+    duration: '4 weeks',
+    status: 'Completed',
+    description: 'A feedback collection system for students to review teachers anonymously and constructively.',
+    tech: ['HTML', 'CSS', 'JavaScript', 'Firebase'],
+    links: [
+      { text: 'GitHub Repo', url: 'https://github.com/NupurSapar/Disaster-Management-System' },
+    ],
+    media: [
+      { type: 'embed', src: 'https://drive.google.com/file/d/1_tZwrafc90yll9vJMTZQ7sdCe9sDv08Y/preview' },
+      {type: 'image', src: 'media/Disaster_Management/Disaster-Management.jpg' },
+  ]
+  },
+  'Thekedar': {
+    category: 'Web Development · Social Impact · Employment Tech',
+    duration: '10 weeks',
+    status: 'Ongoing',
+    description: 'Thekedar is a web platform that acts as a digital bridge between daily wage workers and employers. Inspired by real-world systems where contractors pick up laborers for temporary jobs, the app streamlines this process online. Employers can post jobs, and workers can browse and accept them through simple, dedicated dashboards. Built with React.js, Node.js, Express.js, and MySQL, Thekedar focuses on accessibility, coordination, and trust—making short-term hiring faster, safer, and more reliable for both sides.',
+    tech: ['React.js', 'Node.js', 'Express.js', 'MySQL', 'CSS'],
+    links: [
+      { text: 'GitHub Repo', url: '#' },
+      { text: 'Live Demo', url: '#' }
+    ],
+    media: [
+      {type: 'image', src: 'media/Thekedar/Thekedar.jpg' }
+    ]
+  },
+
+  'Closet': {
+    category: 'Development · AI/ML · Sustainable Fashion',
+    duration: '1 week',
+    status: 'Completed UI Design',
+    description: 'Closet is a personalized fashion styling web app developed to help users effortlessly manage their wardrobe, plan outfits, and embrace sustainable fashion. By using AI-powered recommendations, virtual try-ons, and digitized closet features, the app enables users to style themselves based on their preferences, events, and existing clothing items—promoting mindful shopping and confident self-expression.',
+    tech: ['Figma', 'React', 'AI API'],
+    links: [
+      { text: 'GitHub Repo', url: 'https://github.com/NupurSapar/Closet' },
+      { text: 'Figma Prototype', url: 'https://www.figma.com/proto/lEWNWHPhbNedRxgQbz3U9Y/Fashion?node-id=67-139&starting-point-node-id=67%3A139&t=55FIYY7uHloTpe6l-1' }
+  ],
+    media: [
+      { type: 'embed', src: 'https://drive.google.com/file/d/1AGeR0o9zMbe_2tDfD5ZtL5dI8MdA20iE/preview' },
+      {type: 'image', src: 'media/Closet/Closet_HomePage.jpg' }
+    ]
+  },
+  'CSI UI/UX Competion': {
+    category: 'Prize: 🥇 1st Place (Advanced Track) · UI/UX Design · Hackathon · Frontend Development',
+    duration: '1 day',
+    status: 'Completed',
+    description: 'Designed a complete website UI/UX for a college club during a 2-hour hackathon at MIT-WPU, organized by CSI MIT-WPU. The challenge focused on creating an intuitive, visually engaging, and functional layout under time pressure. My design won 1st place individually, earning recognition for clarity, usability, and creativity.',
+    tech: ['React.js','Figma'],
+    links: [
+      { text: 'GitHub Repo', url: 'https://sgithub.com/NupurSapar/CSI-Evolve-Nupur-Sapar' },
+      { text: 'Figma Prototype', url: '#' }
+    ],
+    media: [{
+      type: 'embed',
+      src: 'https://drive.google.com/file/d/1Zg_R7-DmazOsvjIrhZc8-S1f20PhXdfn/preview'
+    },
+    {
+      type: 'image',
+      src: 'media/CSI/CSI_certificate.jpg'
+    },
+    {
+      type: 'image',
+      src: 'media/CSI/CSI_Home.jpg'
+    }
+  ]
+  },
+  'Pune Metro Internship': {
+    category: 'Internship Project · Figma · UX/UI Design · Mobile App · Wireframing · Augmented Reality (AR) · Public Transportation ·  Design Thinking · Accessibility · Navigation UX',
+    duration: '8 weeks',
+    status: 'Ongoing',
+    description: `Currently working as a UI/UX design intern on an Augmented Reality (AR)-based navigation app for Pune Metro. The project focuses on enhancing commuter experience by designing intuitive, accessible, and visually engaging interfaces that guide passengers through metro stations using real-time AR navigation. Responsibilities include user research, wireframing, prototyping, and collaborating with developers to create an efficient and user-friendly mobile experience tailored to urban transit needs.`,
+    tech: ['Figma'],
+    links: [
+      { text: 'GitHub Repo', url: '#' },
+      { text: 'Figma Prototype', url: '#' }
+    ],
+    media: [
+      {type: 'image',
+      src: 'media/PuneMetro/PuneMetro_Tutorial.png'}
+    ]
+  },
+  'FoodCircle UI': {
+    category: 'Web App · React · UX/UI',
+    duration: '8 weeks',
+    status: 'Ongoing',
+    description: `FoodCircle is a convenient web platform that lets users discover recipes based on the ingredients they already have. Designed to solve the classic 'What's in my pantry?' dilemma, the app allows users to search by ingredient, get tailored recipe results, and even post and share their own creations. With a clean and responsive React-based UI, FoodCircle focuses on usability and collaboration, offering a social experience around everyday cooking.`,
+    tech: ['Figma', 'React'],
+    links: [
+      { text: 'GitHub Repo', url: 'https://github.com/NupurSapar/FoodCircle' },
+      { text: 'Figma Prototype', url: 'https://www.figma.com/proto/NRHfrBjHA3etXMwDvpDwDZ/FoodCircle-by-Nupur?node-id=0-395&p=f&t=jcDUqZOfuOWzNhBZ-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=0%3A395' }
+    ],
+    media: [
+      { type: 'video', src: 'media/FoodCircle/Foodcircle.mp4' },
+      {type: 'image', src: 'media/FoodCircle/Landing Page.png' }
+  ]
+  },
+  'kGamify UI/UX Internship': {
+  category: 'UI/UX Design · Gamification · EdTech · Mobile App Design',
+  duration: 'Ongoing',
+  status: 'In Progress',
+  description: 'Contributing to the user experience and interface design of kGamify, a gamified knowledge championship platform that incentivizes learners with rewards. Responsibilities include conducting user research, creating wireframes and prototypes, and collaborating with the development team to enhance user engagement and accessibility.',
+  tech: ['Figma', 'Adobe XD', 'User Research', 'Prototyping'],
+  links: [
+    { text: 'kGamify on LinkedIn', url: 'https://in.linkedin.com/company/kgamify' },
+    { text: 'kGamify Official Website', url: 'https://kgamify.in/' },
+    { text: 'Figma Prototype', url: 'https://www.figma.com/proto/KKzyUcF3gxUnMfH5zF3qZU/kGamify-by-Nupur?node-id=8-55&p=f&t=9d5xTeImVRJQxzKS-1&scaling=contain&content-scaling=fixed&page-id=0%3A1' }
+  ],
+  media: [
+    { type: 'image', src: 'media/kGamify/kGamify1.png' },
+    { type: 'image', src: 'media/kGamify//kGamify2.png' },
+    { type: 'image', src: 'media/kGamify//kGamify3.jpg' }
+  ]
+},
+
+  'AI Health Companion UI': {
+    category: 'Artificial Intelligence · HealthTech · Web Application',
+    duration: '4 weeks',
+    status: 'Completed',
+    description: 'AI Health Companion is an intelligent wellness assistant that helps users monitor and improve their physical and mental health through personalized insights. It allows users to log symptoms, receive possible condition suggestions, get reminders for medication and hydration, and track habits like sleep, exercise, and stress levels. Built with natural language processing and basic machine learning models, the system simulates a conversational experience that adapts to user needs. Designed with accessibility and empathy in mind, this project showcases the practical use of AI to make healthcare guidance more approachable and continuous.',
+    tech: ['React', 'Node.js', 'AI API', 'MySQL'],
+    links: [
+      { text: 'GitHub Repo', url: 'https://github.com/NupurSapar/AI-Health-Companion' },
+      { text: 'Figma Prototype', url: 'https://www.figma.com/design/tASuT4rQtrUmOcbxWPruG0/AI-Health-Companion-by-Nupur?node-id=0-1&t=FkXzNCV6Yrp9oy9A-1' }
+    ],
+    media: [
+      { type: 'image', src: 'media/AI Health/AIHealth_Dashboard2.jpg' },
+      { type: 'video', src: 'media/AI Health/AIHealth.mp4' },
+      { type: 'image', src: 'media/AI Health/AIHealth_Certificate.jpg' }
+    ]
+  },
+  'Ecommerce Dashboard': {
+    category: 'Power BI · Data Visualization · Business Intelligence · E-commerce Analytics · KPI Dashboard',
+    duration: '1 week',
+    status: 'Completed',
+    description: 'Ecommerce Sales Dashboard built using Microsoft Power BI. This project visualizes key business metrics such as total revenue, sales by category, profit margins, regional performance, and customer behavior trends. The dashboard enables stakeholders to track KPIs in real time, make data-driven decisions, and uncover actionable insights from large datasets.',
+    tech: ['Power BI · Excel'],
+    links: [
+      { text: '', url: '#' },
+      { text: '', url: '#' }
+    ],
+    media: [
+      { type: 'image', src: 'media/Ecommerce/EcommercePWI.jpg' },
+    ]
+  },
+  'Jivhala Internship': {
+  category: 'Graphic Design · Internship · Photography · Videography · Social Media Marketing · Social Impact · Content Creation',
+  duration: '2 months · Started June 2024',
+  status: 'Completed',
+  description: 'Led design and media creation during a social work internship at Jivhala Foundation, Pune. Produced graphic content, awareness posters, and social media reels focused on women’s empowerment, education, and community health. Captured and edited event photography and short-form videos that were published on Instagram and other platforms. The content contributed to a significant rise in online engagement — increasing followers by over 40% and boosting post impressions and likes across campaigns.',
+  tech: ['Canva · Lightroom · Inshot'],
+  links: [
+    { text: 'Jivhala Foundation Instagram', url: 'https://www.instagram.com/jivhalafoundation_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' },
+  ],
+  media: [
+    { type: 'image', src: 'media/Jivhala/Jivhala2.jpg' },
+    { type: 'image', src: 'media/Jivhala/Jivhala1.png' }
+  ]
+},
+'English Training': {
+  category: 'Teaching · Language Education · NGO · English Communication · Social Impact',
+  duration: '2 months',
+  status: 'Completed',
+  description: 'Conducted English language training sessions for Marathi-speaking school teachers at Jivhala Foundation. The program aimed to enhance their English proficiency to better support students in learning foundational language skills. Covered essential grammar (like tenses), conversational practice, and classroom communication techniques using simple, practical examples.',
+  tech: ['Google Slides · Printed Worksheets · Interactive Activities'],
+  links: [
+    { text: 'Jivhala Foundation Instagram', url: 'https://www.instagram.com/jivhalafoundation_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' }
+  ],
+  media: [
+    { type: 'image', src: 'media/Jivhala/Jivhala_English.jpg' },
+  ]
+},
+
+};
+
+const modal = document.getElementById('projectModal');
+const closeBtn = document.querySelector('.close');
+
+// Open modal on book click
+document.querySelectorAll('.book').forEach(book => {
+  book.addEventListener('click', () => {
+    const projectName = book.textContent.trim();
+
+    openProject(projectName);
+  });
+});
+
+let currentMediaIndex = 0;
+let currentMediaList = [];
+
+function openProject(projectName) {
+  const project = projects[projectName];
+  if (!project) return;
+
+  document.getElementById('modalTitle').textContent = projectName;
+
+  document.getElementById('modalMeta').innerHTML = `
+    <span class="meta-item">${project.category}</span>
+    <span class="meta-item">${project.duration}</span>
+    <span class="meta-item">${project.status}</span>
+  `;
+
+  document.getElementById('modalDescription').textContent = project.description;
+
+  document.getElementById('modalTech').innerHTML = project.tech.map(tech =>
+    `<span class="tech-tag">${tech}</span>`
+  ).join('');
+
+  document.getElementById('modalLinks').innerHTML = project.links.map(link =>
+    `<a href="${link.url}" class="project-link" target="_blank">${link.text}</a>`
+  ).join('');
+
+  currentMediaList = Array.isArray(project.media) ? project.media : [project.media];
+  currentMediaIndex = 0;
+  renderMedia(currentMediaIndex);
+
+  modal.style.display = 'block';
+}
+
+function renderMedia(index) {
+  const mediaContainer = document.getElementById('mediaContainer'); // <- this changed
+  const media = currentMediaList[index];
+  mediaContainer.innerHTML = ''; // Clear previous media
+
+  if (!media) return;
+
+  if (media.type === 'image') {
+    const img = document.createElement('img');
+    img.src = media.src;
+    img.alt = `Project Media ${index + 1}`;
+    img.style.cssText = 'width: 100%; max-height: 300px; object-fit: contain; border-radius: 8px;';
+    mediaContainer.appendChild(img);
+
+  } else if (media.type === 'video') {
+    const video = document.createElement('video');
+    video.controls = true;
+    video.style.cssText = 'width: 100%; max-height: 300px; border-radius: 8px;';
+    video.innerHTML = `<source src="${media.src}" type="video/mp4">Your browser does not support video.`;
+    mediaContainer.appendChild(video);
+
+  } else if (media.type === 'embed') {
+    const iframe = document.createElement('iframe');
+    iframe.src = media.src;
+    iframe.width = '100%';
+    iframe.height = '360';
+    iframe.allow = 'autoplay';
+    iframe.allowFullscreen = true;
+    iframe.frameBorder = '0';
+    iframe.style.borderRadius = '8px';
+    mediaContainer.appendChild(iframe);
+  }
+}
+
+
+document.getElementById('prevMedia').addEventListener('click', () => {
+  if (currentMediaIndex > 0) {
+    currentMediaIndex--;
+    renderMedia(currentMediaIndex);
+  }
+});
+
+document.getElementById('nextMedia').addEventListener('click', () => {
+  if (currentMediaIndex < currentMediaList.length - 1) {
+    currentMediaIndex++;
+    renderMedia(currentMediaIndex);
+  }
+});
+
+
+closeBtn.onclick = () => modal.style.display = 'none';
+window.onclick = e => { if (e.target === modal) modal.style.display = 'none'; };
+
+const mediaContainer = document.getElementById('modalMedia');
+mediaContainer.innerHTML = ''; // clear old media
+
+if (project.media) {
+  if (project.media.type === 'image') {
+    const img = document.createElement('img');
+    img.src = project.media.src;
+    img.alt = projectName + ' image';
+    mediaContainer.appendChild(img);
+  } else if (project.media.type === 'video') {
+    const video = document.createElement('video');
+    video.src = project.media.src;
+    video.controls = true;
+    mediaContainer.appendChild(video);
+  }else if (media.type === 'embed') {
+      const iframe = document.createElement('iframe');
+      iframe.src = media.src;
+      iframe.width = '100%';
+      iframe.height = '360';
+      iframe.allow = 'autoplay';
+      iframe.allowFullscreen = true;
+      iframe.style.borderRadius = '8px';
+      iframe.frameBorder = '0';
+      mediaContainer.appendChild(iframe);
+  }
+}
+
+  document.querySelectorAll('.rack').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-target');
+      const section = document.getElementById(targetId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  function flipToPage(pageNumber) {
+  const pages = document.querySelectorAll('.flip-page');
+  pages.forEach((page, index) => {
+    if (index === pageNumber - 1) {
+      page.style.display = 'block';
+      page.style.transform = 'rotateY(0deg)';
+      page.style.opacity = '1';
+    } else {
+      page.style.display = 'none';
+      page.style.transform = 'rotateY(180deg)';
+      page.style.opacity = '0';
+    }
+  });
+}
+
+
+</script>
+</body>
+</html>
